@@ -1,0 +1,28 @@
+{%- comment -%}
+  Mega Menu Column Snippet
+  Renders a single column within a mega menu dropdown.
+
+  Accepts:
+  - title: the column heading
+  - linklist: a link_list handle
+  - column_index: the column number
+{%- endcomment -%}
+
+<div class="cmm__column" data-column="{{ column_index }}">
+  {%- if title != blank -%}
+    <h3 class="cmm__column-title">{{ title }}</h3>
+  {%- endif -%}
+
+  {%- if linklist != blank -%}
+    {%- assign column_links = linklists[linklist] -%}
+    {%- if column_links != blank -%}
+      <ul class="cmm__column-list">
+        {%- for link in column_links.links -%}
+          <li class="cmm__column-item">
+            <a href="{{ link.url }}" class="cmm__column-link">{{ link.title }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  {%- endif -%}
+</div>

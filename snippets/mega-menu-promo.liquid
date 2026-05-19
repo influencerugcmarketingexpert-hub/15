@@ -1,0 +1,25 @@
+{%- comment -%}
+  Mega Menu Promo Snippet
+  Renders the promotional/featured image area within a mega menu dropdown.
+
+  Accepts:
+  - block: the block object containing promo settings
+{%- endcomment -%}
+
+<div class="cmm__promo">
+  {%- if block.settings.featured_image != blank -%}
+    {{ block.settings.featured_image | image_url: width: 600 | image_tag: class: 'cmm__promo-image' }}
+  {%- endif -%}
+
+  {%- if block.settings.promo_heading != blank -%}
+    <h3 class="cmm__promo-heading">{{ block.settings.promo_heading }}</h3>
+  {%- endif -%}
+
+  {%- if block.settings.promo_subheading != blank -%}
+    <p class="cmm__promo-subheading">{{ block.settings.promo_subheading }}</p>
+  {%- endif -%}
+
+  {%- if block.settings.promo_button_text != blank and block.settings.promo_button_link != blank -%}
+    <a href="{{ block.settings.promo_button_link }}" class="cmm__promo-btn">{{ block.settings.promo_button_text }}</a>
+  {%- endif -%}
+</div>

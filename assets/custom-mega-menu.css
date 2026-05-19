@@ -1,0 +1,633 @@
+/* ==========================================================================
+   Custom Mega Menu - Premium Luxury Navigation
+   Inspired by Prada / The Jacket Maker aesthetics
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   CSS Custom Properties (Defaults - overridden by section settings)
+   -------------------------------------------------------------------------- */
+.cmm-section {
+  --mm-bg: #ffffff;
+  --mm-text: #1a1a1a;
+  --mm-dropdown-bg: #ffffff;
+  --mm-dropdown-text: #1a1a1a;
+  --mm-accent: #8b6f47;
+  --mm-topbar-bg: #1a1a1a;
+  --mm-topbar-text: #ffffff;
+  --mm-border: #e5e5e5;
+  --mm-font-size: 14px;
+  --mm-dropdown-width: 100%;
+  --mm-height: 70px;
+  --mm-transition-duration: 0.3s;
+  --mm-transition-easing: cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Base / Reset
+   -------------------------------------------------------------------------- */
+custom-mega-menu {
+  display: block;
+  position: relative;
+  z-index: 1000;
+  font-family: inherit;
+}
+
+custom-mega-menu *,
+custom-mega-menu *::before,
+custom-mega-menu *::after {
+  box-sizing: border-box;
+}
+
+custom-mega-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+custom-mega-menu a {
+  text-decoration: none;
+  color: inherit;
+}
+
+custom-mega-menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Top Bar
+   -------------------------------------------------------------------------- */
+.cmm__topbar {
+  background-color: var(--mm-topbar-bg);
+  color: var(--mm-topbar-text);
+  text-align: center;
+  padding: 8px 20px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cmm__topbar-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.cmm__topbar-text {
+  margin: 0;
+  font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+   Header Bar
+   -------------------------------------------------------------------------- */
+.cmm__header {
+  background-color: var(--mm-bg);
+  color: var(--mm-text);
+  border-bottom: 1px solid var(--mm-border);
+  position: relative;
+  z-index: 100;
+}
+
+.cmm__header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: var(--mm-height);
+}
+
+/* --------------------------------------------------------------------------
+   Sticky Header
+   -------------------------------------------------------------------------- */
+.cmm--sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.cmm--sticky .cmm__header {
+  transition: box-shadow var(--mm-transition-duration) var(--mm-transition-easing),
+              transform var(--mm-transition-duration) var(--mm-transition-easing);
+}
+
+.cmm--sticky.cmm--scrolled .cmm__header {
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   Logo
+   -------------------------------------------------------------------------- */
+.cmm__logo {
+  flex-shrink: 0;
+}
+
+.cmm__logo-link {
+  display: inline-flex;
+  align-items: center;
+}
+
+.cmm__logo-img {
+  max-height: 40px;
+  width: auto;
+  display: block;
+}
+
+.cmm__logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop Navigation
+   -------------------------------------------------------------------------- */
+.cmm__nav {
+  display: none;
+  flex: 1;
+  justify-content: center;
+}
+
+@media (min-width: 990px) {
+  .cmm__nav {
+    display: flex;
+  }
+}
+
+.cmm__nav-list {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.cmm__nav-item {
+  position: static;
+}
+
+.cmm__nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 20px;
+  font-size: var(--mm-font-size);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color var(--mm-transition-duration) var(--mm-transition-easing);
+  white-space: nowrap;
+}
+
+.cmm__nav-link:hover,
+.cmm__nav-link:focus {
+  color: var(--mm-accent);
+}
+
+.cmm__nav-item--has-dropdown > .cmm__nav-link {
+  cursor: pointer;
+}
+
+.cmm__chevron {
+  transition: transform var(--mm-transition-duration) var(--mm-transition-easing);
+  flex-shrink: 0;
+}
+
+.cmm__nav-item--active > .cmm__nav-link .cmm__chevron {
+  transform: rotate(180deg);
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Panel
+   -------------------------------------------------------------------------- */
+.cmm__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--mm-dropdown-width);
+  max-width: 1440px;
+  background-color: var(--mm-dropdown-bg);
+  color: var(--mm-dropdown-text);
+  border: 1px solid var(--mm-border);
+  border-top: none;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 200;
+  transition: opacity var(--mm-transition-duration) var(--mm-transition-easing),
+              visibility var(--mm-transition-duration) var(--mm-transition-easing),
+              transform var(--mm-transition-duration) var(--mm-transition-easing);
+}
+
+.cmm__nav-item--active .cmm__dropdown {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cmm__dropdown-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  padding: 40px 60px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.cmm__dropdown-inner:only-child {
+  grid-template-columns: 1fr;
+}
+
+/* --------------------------------------------------------------------------
+   Dropdown Columns
+   -------------------------------------------------------------------------- */
+.cmm__dropdown-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 30px;
+}
+
+.cmm__column-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 16px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--mm-border);
+}
+
+.cmm__column-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cmm__column-item {
+  line-height: 1.4;
+}
+
+.cmm__column-link {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--mm-dropdown-text);
+  transition: color var(--mm-transition-duration) var(--mm-transition-easing),
+              padding-left var(--mm-transition-duration) var(--mm-transition-easing);
+  display: inline-block;
+}
+
+.cmm__column-link:hover {
+  color: var(--mm-accent);
+  padding-left: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Promo Area
+   -------------------------------------------------------------------------- */
+.cmm__dropdown-promo {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.cmm__promo {
+  text-align: center;
+}
+
+.cmm__promo-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 16px;
+  object-fit: cover;
+}
+
+.cmm__promo-heading {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 0 0 6px 0;
+}
+
+.cmm__promo-subheading {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--mm-dropdown-text);
+  opacity: 0.7;
+  margin: 0 0 16px 0;
+}
+
+.cmm__promo-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--mm-text);
+  color: var(--mm-text);
+  transition: background-color var(--mm-transition-duration) var(--mm-transition-easing),
+              color var(--mm-transition-duration) var(--mm-transition-easing);
+}
+
+.cmm__promo-btn:hover {
+  background-color: var(--mm-text);
+  color: var(--mm-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Animation Variants
+   -------------------------------------------------------------------------- */
+/* Fade */
+.cmm--fade .cmm__dropdown {
+  opacity: 0;
+}
+
+.cmm--fade .cmm__nav-item--active .cmm__dropdown {
+  opacity: 1;
+}
+
+/* Slide Down */
+.cmm--slide-down .cmm__dropdown {
+  opacity: 0;
+  transform: translateX(-50%) translateY(-10px);
+}
+
+.cmm--slide-down .cmm__nav-item--active .cmm__dropdown {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Slide Up */
+.cmm--slide-up .cmm__dropdown {
+  opacity: 0;
+  transform: translateX(-50%) translateY(10px);
+}
+
+.cmm--slide-up .cmm__nav-item--active .cmm__dropdown {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Zoom */
+.cmm--zoom .cmm__dropdown {
+  opacity: 0;
+  transform: translateX(-50%) scale(0.96);
+  transform-origin: top center;
+}
+
+.cmm--zoom .cmm__nav-item--active .cmm__dropdown {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* --------------------------------------------------------------------------
+   Utility Icons
+   -------------------------------------------------------------------------- */
+.cmm__utilities {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.cmm__utility-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  color: var(--mm-text);
+  transition: color var(--mm-transition-duration) var(--mm-transition-easing);
+  position: relative;
+}
+
+.cmm__utility-link:hover {
+  color: var(--mm-accent);
+}
+
+.cmm__cart-count {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  background-color: var(--mm-accent);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+  padding: 3px 5px;
+  border-radius: 50%;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Toggle
+   -------------------------------------------------------------------------- */
+.cmm__mobile-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  color: var(--mm-text);
+}
+
+@media (min-width: 990px) {
+  .cmm__mobile-toggle {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Drawer - Base
+   -------------------------------------------------------------------------- */
+.cmm__mobile-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background-color: var(--mm-bg);
+  color: var(--mm-text);
+  z-index: 2000;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  visibility: hidden;
+  transition: transform var(--mm-transition-duration) var(--mm-transition-easing),
+              visibility var(--mm-transition-duration) var(--mm-transition-easing),
+              opacity var(--mm-transition-duration) var(--mm-transition-easing);
+}
+
+.cmm__mobile-drawer--drawer-left {
+  left: 0;
+  width: 320px;
+  max-width: 85vw;
+  transform: translateX(-100%);
+}
+
+.cmm__mobile-drawer--drawer-right {
+  right: 0;
+  width: 320px;
+  max-width: 85vw;
+  transform: translateX(100%);
+}
+
+.cmm__mobile-drawer--fullscreen {
+  left: 0;
+  right: 0;
+  width: 100%;
+  transform: translateY(-100%);
+}
+
+/* Open state */
+.cmm__mobile-drawer--open {
+  visibility: visible;
+  transform: translate(0, 0);
+}
+
+.cmm__mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--mm-border);
+}
+
+.cmm__mobile-drawer-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cmm__mobile-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  color: var(--mm-text);
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Navigation
+   -------------------------------------------------------------------------- */
+.cmm__mobile-nav {
+  padding: 20px 0;
+}
+
+.cmm__mobile-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.cmm__mobile-item {
+  border-bottom: 1px solid var(--mm-border);
+}
+
+.cmm__mobile-link-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cmm__mobile-link {
+  display: block;
+  padding: 14px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+.cmm__mobile-submenu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: var(--mm-text);
+}
+
+.cmm__mobile-chevron {
+  transition: transform var(--mm-transition-duration) var(--mm-transition-easing);
+}
+
+.cmm__mobile-submenu-toggle[aria-expanded="true"] .cmm__mobile-chevron {
+  transform: rotate(180deg);
+}
+
+/* Mobile Submenu */
+.cmm__mobile-submenu {
+  display: none;
+  padding: 0 0 10px 0;
+}
+
+.cmm__mobile-submenu[aria-hidden="false"] {
+  display: block;
+}
+
+.cmm__mobile-submenu-item {
+  padding: 0;
+}
+
+.cmm__mobile-submenu-link {
+  display: block;
+  padding: 10px 24px 10px 40px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--mm-text);
+  opacity: 0.8;
+  transition: opacity var(--mm-transition-duration) var(--mm-transition-easing),
+              color var(--mm-transition-duration) var(--mm-transition-easing);
+}
+
+.cmm__mobile-submenu-link:hover {
+  opacity: 1;
+  color: var(--mm-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Backdrop
+   -------------------------------------------------------------------------- */
+.cmm__backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1500;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--mm-transition-duration) var(--mm-transition-easing),
+              visibility var(--mm-transition-duration) var(--mm-transition-easing);
+}
+
+.cmm__backdrop--visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 989px) {
+  .cmm__header-inner {
+    padding: 0 16px;
+  }
+
+  .cmm__dropdown {
+    display: none;
+  }
+
+  .cmm__utilities {
+    gap: 10px;
+  }
+}
+
+@media (min-width: 990px) {
+  .cmm__mobile-drawer {
+    display: none;
+  }
+}
